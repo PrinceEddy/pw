@@ -9,15 +9,24 @@
   <link rel="manifest" href="/manifest.json">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ✅ OneSignal SDK -->
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     OneSignalDeferred.push(async function(OneSignal) {
       await OneSignal.init({
         appId: "cddabc07-7ebb-4d45-ac94-984789a04955",
+        promptOptions: {
+          slidedown: {
+            enabled: true,
+            autoPrompt: false // ✅ Manual control
+          }
+        }
       });
     });
   </script>
+
   <style>
     :root {
       --primary-blue: #1E3A8A;
@@ -35,17 +44,19 @@
     }
   </style>
 </head>
+
 <body class="bg-gradient-to-r from-[var(--primary-blue)] to-[var(--accent-yellow)] text-white flex items-center justify-center min-h-screen p-6">
   <div class="bg-white text-gray-900 p-10 rounded-3xl shadow-2xl max-w-md w-full text-center border border-gray-200">
-    <img src="kmet logo.PNG" alt="KMET Logo" class="mx-auto mb-6 w-32 h-32 object-contain">
+    <img src="kmet logo.PNG" alt="KMET Logo" class="mx-auto mb-6 w-32 h-32 object-contain" />
     <h1 class="text-3xl font-extrabold mb-4 text-[var(--primary-blue)]">KMET Notification Service</h1>
     <p class="text-gray-700 mb-6 text-lg">Stay informed with real-time updates from KMET. Click below to enable notifications.</p>
     <button onclick="subscribe()" class="bg-[var(--accent-yellow)] hover:bg-[var(--primary-blue)] text-white font-semibold py-3 px-8 rounded-full transition duration-300 shadow-lg text-lg">Enable Notification</button>
   </div>
+
   <script>
     function subscribe() {
       window.OneSignalDeferred.push(function(OneSignal) {
-        OneSignal.showSlidedownPrompt();
+        OneSignal.showSlidedownPrompt(); // ✅ Triggers the custom prompt
       });
     }
   </script>
