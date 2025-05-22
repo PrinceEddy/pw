@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+   
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -9,6 +10,19 @@
      <link rel="manifest" href="/manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ✅ Add OneSignal code below -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "cddabc07-7ebb-4d45-ac94-984789a04955",
+      });
+    });
+  </script>
+  </head>
+
+
   </head>
   <style>
         :root {
@@ -30,25 +44,15 @@
       <img src="kmet logo.PNG" alt="KMET Logo" class="mx-auto mb-6 w-32 h-32 object-contain"> <!-- KMET Logo -->
         <h1 class="text-3xl font-extrabold mb-4 text-[var(--primary-blue)]">KMET Notification Service</h1>
         <p class="text-gray-700 mb-6 text-lg">Stay informed with real-time updates from KMET. Click below to enable notifications.</p>
-    <button onclick="subscribe()" class="bg-[var(--accent-yellow)] hover:bg-[var(--primary-blue)] text-white font-semibold py-3 px-8 rounded-full transition duration-300 shadow-lg text-lg">Enable Notification</button>
+    <button onclick="subscribe()" class="bg-[var(--accent-yellow)] hover:bg-[var(--primary-blue)] text-white font-semibold py-3 px-8 rounded-full transition duration-300 shadow-lg text-lg" >Enable Notification</button>
     </div>
     <script>
-      async function subscribe() {
-        let sw = await navigator.serviceWorker.ready;
-        let push = await sw.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey:
-            'BP7hpzoaALCjd5eLnzaDyopHhFHTEw3FzNvOxwl8DwjiN3F_XplEm-J-cG1SGxvdJTePjEK9aEKgikxR4lNw0G8'
-        });
-        console.log(JSON.stringify(push));
-      }
-
-      if ('serviceWorker' in navigator) {
-        addEventListener('load', async () => {
-          let sw = await navigator.serviceWorker.register('./sw.js');
-          console.log(sw);
+       function subscribe() {
+        window.OneSignalDeferred.push(function(OneSignal) {
+          OneSignal.showSlidedownPrompt(); // Trigger OneSignal prompt
         });
       }
     </script>
   </body>
 </html>
+
